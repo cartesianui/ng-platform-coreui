@@ -241,6 +241,7 @@
 @use "@coreui/chartjs/scss/coreui-chartjs";   // Chart.js tooltips
 @use "flag-icons";                            // SVG flag assets
 @use "datatable";                             // ngx-datatable base styles
+@use "timeline";                              // order timeline (a list, not a table)
 @use "theme";                                 // structural CSS / utilities
 @use "custom";                                // app-specific overrides
 @use "examples";                              // demo styles (TODO: drop in prod)
