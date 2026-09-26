@@ -10,7 +10,19 @@
 // surface — but sitting inside the datatable's frame is not the same as being a datatable, and
 // filing it in `_datatable.scss` would have buried a list pattern in a table's file. The
 // component carries no styles of its own; nothing else in `procurement` does either.
-.po-timeline {
+// ⚠⚠ TWO SELECTORS, ONE RULESET — AN ADDITIVE WIDEN, NOT A RENAME. `.so-timeline` was added
+// 2026-09-18 so the SALE ORDER's timeline tab renders through this same partial instead of
+// duplicating 155 lines into sales. A comma list is the strongest form of PO-safe: each selector
+// keeps its own specificity and its own match set, so every element purchase matched before still
+// matches, with identical computed styles BY CONSTRUCTION rather than by inspection. The `&__x`
+// descendants below expand across both parents, which is the mechanism this rests on.
+//
+// ⚠ THE CUSTOM PROPERTIES KEEP THEIR `--po-` NAMES DELIBERATELY. They are declared here and
+// consumed here (:34, :46, :138, :143) and purchase reads them; renaming them to `--so-` or to
+// anything neutral would be a rename wearing a tidy-up's clothes, which is the thing this edit
+// specifically is not. A sales timeline inherits them by matching the selector, which is the point.
+.po-timeline,
+.so-timeline {
   --po-timeline-gutter: 4.75rem;
   --po-timeline-rail: 1.75rem;
 
