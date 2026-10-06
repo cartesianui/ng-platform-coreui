@@ -587,7 +587,7 @@
 
 // ─── Copy-to-clipboard (reusable formatter affordance) ─────
 // Output by FormatterRegistry.register('copy', ...) in
-// @cartesianui/common/formatter.utils. Click is wired by
+// @cartesianui/platform-common/formatter.utils. Click is wired by
 // AppDatatableComponent.onCellClick (delegated — [innerHTML] can't carry a
 // real onclick), which toggles `.dt-copy--done` for the checkmark swap.
 .dt-copy {
@@ -692,7 +692,7 @@
 }
 
 // ─── Tooltip (reusable formatter affordance) ───────
-// Output by `wrapWithTooltip` in @cartesianui/common/formatter.utils.
+// Output by `wrapWithTooltip` in @cartesianui/platform-common/formatter.utils.
 // Styled popup with arrow + optional header label, revealed on hover OR
 // click (focus-visible on the trigger). Mirrors the image-preview
 // :has() overflow-escape above so the bubble can leave the cell bounds.
