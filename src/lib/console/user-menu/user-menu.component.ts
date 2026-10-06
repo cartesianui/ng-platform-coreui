@@ -1,5 +1,5 @@
 import { Component, computed, inject, Input } from '@angular/core';
-import { AuthHttpService, SessionService, TokenService } from '@cartesianui/core';
+import { AuthHttpService, SessionService, TokenService } from '@cartesianui/platform-core';
 import { HeaderActionsService } from '../../services/header-actions.service';
 import { UserMenuSectionsService } from '../../services/user-menu-sections.service';
 

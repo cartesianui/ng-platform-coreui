@@ -4,7 +4,7 @@ import { RouterModule, RouterLink, RouterLinkActive, RouterOutlet } from '@angul
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 ;
 
-import { CommonModule as CartesianCommonModule } from '@cartesianui/common';
+import { CommonModule as CartesianCommonModule } from '@cartesianui/platform-common';
 import { SystemNotificationsBannerComponent } from '@cartesianui/system-notification';
 import { CartaAssistantComponent } from '@cartesianui/ai-carta';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';

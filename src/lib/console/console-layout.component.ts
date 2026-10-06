@@ -2,7 +2,7 @@ import { Component, DestroyRef, effect, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { EntitlementsService, PermissionCheckerService } from '@cartesianui/core';
+import { EntitlementsService, PermissionCheckerService } from '@cartesianui/platform-core';
 import { INavData } from '@coreui/angular';
 import { INavDataWithPermission, NavSection } from '../types';
 import { NavFilterService } from '../services/nav-filter.service';

@@ -1,6 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EntitlementsService, PermissionCheckerService } from '@cartesianui/core';
+import { EntitlementsService, PermissionCheckerService } from '@cartesianui/platform-core';
 import { INavDataWithPermission } from '../types';
 import { NavFilterService } from '../services/nav-filter.service';
 import { resolveNavLabels } from '../utils/nav-label.util';
