@@ -3,16 +3,8 @@
 
 <c-sidebar-header class="border-bottom sidebar-header-row">
   <c-sidebar-brand
-    [brandFull]="{
-      src: 'assets/img/brand/logo.svg',
-      width: 170,
-      alt: 'CartesianUI Logo'
-    }"
-    [brandNarrow]="{
-      src: 'assets/img/brand/icon.svg',
-      width: 40,
-      alt: 'CartesianUI Icon'
-    }"
+    [brandFull]="brandFull()"
+    [brandNarrow]="brandNarrow()"
     routerLink="./"
   >
 

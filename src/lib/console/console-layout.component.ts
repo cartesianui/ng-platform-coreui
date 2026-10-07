@@ -1,9 +1,9 @@
-import { Component, DestroyRef, effect, inject } from '@angular/core';
+import { Component, DestroyRef, computed, effect, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { EntitlementsService, PermissionCheckerService } from '@cartesianui/platform-core';
-import { INavData } from '@coreui/angular';
+import { ColorModeService, INavData } from '@coreui/angular';
 import { INavDataWithPermission, NavSection } from '../types';
 import { NavFilterService } from '../services/nav-filter.service';
 import { NavSectionService } from '../services/nav-section.service';
@@ -24,6 +24,21 @@ export class ConsoleLayoutComponent {
   private sectionService = inject(NavSectionService);
   private entitlementsService = inject(EntitlementsService);
   private destroyRef = inject(DestroyRef);
+
+  // The sidebar surface follows the colour mode (--ct-surface turns dark), so the
+  // brand swaps to the all-white reverse artwork in dark mode to stay legible.
+  private readonly colorMode = inject(ColorModeService).colorMode;
+  private readonly isDark = computed(() => this.colorMode() === 'dark');
+  protected readonly brandFull = computed(() => ({
+    src: `assets/img/brand/${this.isDark() ? 'logo-reverse' : 'logo'}.svg`,
+    width: 170,
+    alt: 'Keelhand'
+  }));
+  protected readonly brandNarrow = computed(() => ({
+    src: `assets/img/brand/${this.isDark() ? 'icon-reverse' : 'icon'}.svg`,
+    width: 40,
+    alt: 'Keelhand'
+  }));
 
   public navItems: INavDataWithPermission[] = [];
 
