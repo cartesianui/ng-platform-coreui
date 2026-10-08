@@ -14,7 +14,7 @@
          section tabs. -->
     @if (headerNavLinks.length) {
       <a class="header-brand d-inline-flex align-items-center me-3" routerLink="./" title="Home">
-        <img src="assets/img/brand/logo.svg" alt="Logo" height="26" />
+        <img [src]="isDark() ? 'assets/img/brand/logo-reverse.svg' : 'assets/img/brand/logo.svg'" alt="Keelhand" height="26" />
       </a>
       <c-header-nav class="d-flex flex-wrap me-auto app-header-nav">
         @for (item of headerNavLinks; track item.url) {
