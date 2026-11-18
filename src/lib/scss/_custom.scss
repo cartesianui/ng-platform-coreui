@@ -23,6 +23,14 @@
   cursor: not-allowed;
 }
 
+// A disabled input (a locked form or row) reads the same as a read-only one: the blocked cursor.
+// Bootstrap gives `:disabled` no cursor, so it showed the plain arrow next to read-only fields
+// that showed the blocked one (owner, 2026-11-18).
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+}
+
 // AppDialogService.confirm() lifts the modal's chrome out of Bootstrap's
 // default .modal-header / .modal-body / .modal-footer into a self-contained
 // `.app-dialog` shell that owns its own padding + tone. Zero the
