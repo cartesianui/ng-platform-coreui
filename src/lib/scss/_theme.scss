@@ -456,6 +456,16 @@ textarea.form-control {
     display: block;
   }
 
+  // ...except an input inside an `.input-group` (input + Dr/Cr, %, unit
+  // tag). Bootstrap sizes those with `flex: 1 1 auto; width: 1%` so the
+  // tag sits on the same line; the full-width rule above outranks that
+  // and pushes the tag onto a second line. Give Bootstrap's width back.
+  > .main-content .input-group > input.form-control {
+    width: 1%;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
   // `<with-validation>` wraps a form control + error block. Default
   // inline display gives it no width, which collapses `width: 100%`
   // on the child input. Make it block so children inherit width.
