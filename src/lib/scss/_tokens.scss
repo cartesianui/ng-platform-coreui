@@ -22,8 +22,16 @@
 //  the dark pass wires the dark `--ct-*` blocks below.
 // ============================================================================
 
+@use 'sass:color';
+@use 'variables' as *;
+
+// Dark-mode surface, also the base the dark primary soft/border are mixed on.
+$_dark-surface: #161922;
+
 /* ---------------------------------------------------------------------------
    PALETTE TOKENS  (--ct-*)
+   The brand family is derived from the Sass palette in _variables.scss
+   ($cartesian-indigo), so the brand colour is defined once.
    -------------------------------------------------------------------------- */
 :root,
 [data-theme="admin"][data-mode="light"] {
@@ -39,18 +47,18 @@
   --ct-text-muted:#5c6378;
   --ct-text-faint:#9298ad;
   /* brand */
-  --ct-primary:#4f46e5;      --ct-primary-rgb:79,70,229;
-  --ct-primary-hover:#4338ca;
-  --ct-on-primary:#ffffff;
-  --ct-primary-soft:#ececff;
-  --ct-primary-border:#d7d8ff;
+  --ct-primary:#{$cartesian-indigo};  --ct-primary-rgb:#{rgb-channels($cartesian-indigo)};  /* Keelhand brand */
+  --ct-primary-hover:#{$primary-dark};
+  --ct-on-primary:#{$white};
+  --ct-primary-soft:#{color.mix(white, $cartesian-indigo, $cartesian-tint-soft)};
+  --ct-primary-border:#{color.mix(white, $cartesian-indigo, $cartesian-tint-border)};
   /* status */
   --ct-success:#15914b;  --ct-success-rgb:21,145,75;   --ct-success-soft:#e6f5ec;
   --ct-warning:#b8730a;  --ct-warning-rgb:184,115,10;  --ct-warning-soft:#fbf0df;
   --ct-danger:#d23a3a;   --ct-danger-rgb:210,58,58;    --ct-danger-soft:#fbe9e9;
   --ct-info:#2563eb;     --ct-info-rgb:37,99,235;      --ct-info-soft:#e7eefe;
-  /* focus ring */
-  --ct-ring:rgba(79,70,229,.32);
+  /* focus ring — follows whatever --ct-primary-rgb the app sets */
+  --ct-ring:rgba(var(--ct-primary-rgb),.32);
 }
 
 /* admin dark — also the DEFAULT dark palette, activated by CoreUI's
@@ -60,7 +68,7 @@
 [data-coreui-theme="dark"] {
   color-scheme: dark;
   --ct-canvas:#0d0f17;       --ct-canvas-rgb:13,15,23;
-  --ct-surface:#161922;
+  --ct-surface:#{$_dark-surface};
   --ct-surface-2:#1b1f2a;
   --ct-surface-3:#232838;
   --ct-border:#2a2f3e;
@@ -68,16 +76,17 @@
   --ct-text:#e8eaf4;         --ct-text-rgb:232,234,244;
   --ct-text-muted:#9aa0b6;
   --ct-text-faint:#69708a;
-  --ct-primary:#7e76f1;      --ct-primary-rgb:126,118,241;
-  --ct-primary-hover:#9089f5;
-  --ct-on-primary:#ffffff;
-  --ct-primary-soft:#23254a;
-  --ct-primary-border:#39357a;
+  --ct-primary:#{color.mix(white, $cartesian-indigo, 20%)};
+  --ct-primary-rgb:#{rgb-channels(color.mix(white, $cartesian-indigo, 20%))};
+  --ct-primary-hover:#{color.mix(white, $cartesian-indigo, 30%)};
+  --ct-on-primary:#{$white};
+  --ct-primary-soft:#{color.mix($cartesian-indigo, $_dark-surface, 18%)};
+  --ct-primary-border:#{color.mix($cartesian-indigo, $_dark-surface, 35%)};
   --ct-success:#34c47a;  --ct-success-rgb:52,196,122;  --ct-success-soft:#10271c;
   --ct-warning:#e0a13a;  --ct-warning-rgb:224,161,58;  --ct-warning-soft:#2a2010;
   --ct-danger:#f0726f;   --ct-danger-rgb:240,114,111;  --ct-danger-soft:#2c1517;
   --ct-info:#5e9bf6;     --ct-info-rgb:94,155,246;     --ct-info-soft:#11203a;
-  --ct-ring:rgba(126,118,241,.42);
+  --ct-ring:rgba(var(--ct-primary-rgb),.42);
 }
 
 [data-theme="care"][data-mode="light"] {
