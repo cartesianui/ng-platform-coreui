@@ -465,8 +465,16 @@ textarea.form-control {
   // child (e.g. a `<textarea>` with default cols) can push the
   // column past its intended width, blowing out the row and
   // visually clipping the right column.
-  > .main-content .col-md-4,
-  > .main-content .col-md-8 {
+  // Only the two LAYOUT columns (direct children of the form's row), never
+  // nested grid columns inside a card: a descendant selector also stretched
+  // e.g. <billing-payment-capture>'s own col-md-4/col-md-8 to full height and
+  // pushed its fields out of view.
+  > .main-content > form > .row > .col-md-4,
+  > .main-content > .row > .col-md-4,
+  > .main-content > tabset > .tab-content > tab.tab-pane.active > form > .row > .col-md-4,
+  > .main-content > form > .row > .col-md-8,
+  > .main-content > .row > .col-md-8,
+  > .main-content > tabset > .tab-content > tab.tab-pane.active > form > .row > .col-md-8 {
     height: 100%;
     min-height: 0;
     min-width: 0;
@@ -474,7 +482,9 @@ textarea.form-control {
     flex-direction: column;
   }
 
-  > .main-content .col-md-4 {
+  > .main-content > form > .row > .col-md-4,
+  > .main-content > .row > .col-md-4,
+  > .main-content > tabset > .tab-content > tab.tab-pane.active > form > .row > .col-md-4 {
     overflow-y: auto;
   }
 
@@ -528,7 +538,9 @@ textarea.form-control {
   // `width: 100%` and overflows the card's right padding. The left
   // column already scrolls vertically (`overflow-y: auto`) so a
   // non-shrunk card is fine.
-  > .main-content .col-md-4 > .card {
+  > .main-content > form > .row > .col-md-4 > .card,
+  > .main-content > .row > .col-md-4 > .card,
+  > .main-content > tabset > .tab-content > tab.tab-pane.active > form > .row > .col-md-4 > .card {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
