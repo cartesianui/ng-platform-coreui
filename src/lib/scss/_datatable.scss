@@ -8,6 +8,8 @@
 
 .ngx-datatable {
   font-size: 0.875rem; // 14px
+  // Inter tabular figures: amounts / counts line up down a column.
+  font-variant-numeric: tabular-nums;
 
   &.material {
     box-shadow: none !important;

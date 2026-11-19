@@ -49,10 +49,11 @@ $cartesian-input-group-addon-bg:   #f1f5f9;
 $cartesian-invalid-border: #ee8ad4;
 $cartesian-valid-border:   #d4ee8a;
 
-// Typography — IBM Plex Sans (UI) + IBM Plex Mono (numeric/identifier columns).
+// Typography — Inter (UI, all apps) + IBM Plex Mono (code/identifier columns).
 // Faces are self-hosted in _fonts.scss; stacks fall back to the system UI font.
+// Amounts and table figures use Inter's tabular numbers (font-variant-numeric).
 $cartesian-body-font-family:
-  "IBM Plex Sans",
+  "Inter",
   system-ui,
   -apple-system,
   "Segoe UI",
