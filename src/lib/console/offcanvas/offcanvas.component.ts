@@ -37,18 +37,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         overflow-y: auto;
         flex: 1 1 auto;
         min-height: 0; /* required for flex child scroll in many browsers */
-        /* Centre and cap the content at a comfortable width on wide screens
-           (design spec §3). Done with padding, not a wrapper, so the scrollbar
-           stays at the drawer edge and bounded-form documents keep height:100%.
-           Below the cap the normal CoreUI padding applies. */
-        --oc-content-max: var(--ct-offcanvas-content-doc);
-        padding-inline: max(var(--cui-offcanvas-padding-x, 1rem), calc((100% - var(--oc-content-max)) / 2));
       }
 
-      /* Narrower tier for simple / master-data / party forms. */
-      :host(.offcanvas-narrow) .offcanvas-body {
-        --oc-content-max: var(--ct-offcanvas-content-form);
-      }
     `
   ]
 })
