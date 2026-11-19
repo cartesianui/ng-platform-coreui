@@ -617,6 +617,30 @@ textarea.form-control {
   }
 }
 
+// `<selectable-control>` inside an `.input-group` (e.g. a "Product" addon in
+// front of the lookup). Bootstrap's join rules (shared border, squared inner
+// corners) reach only DIRECT children, and this control's bordered element is
+// nested (selectable-control > .selectable-control > .lookup-input-wrapper),
+// so without these it keeps its rounded corners and shows a doubled seam.
+// (Bootstrap's own `margin-left: -border-width` already lands on the host,
+// which closes the seam; only the corners and the flex sizing need help.)
+// Same idea as the `.input-group > input.form-control` fix in .bounded-form.
+.input-group > selectable-control {
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+}
+
+.input-group > selectable-control:not(:first-child) .lookup-input-wrapper {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input-group > selectable-control:not(:last-child) .lookup-input-wrapper {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 // Items area — internally scrolling, takes all remaining space.
 // `scrollbar-gutter: stable` reserves space for the thumb so the
 // content doesn't shift when the bar appears/disappears, and keeps
