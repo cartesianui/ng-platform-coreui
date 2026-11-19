@@ -698,7 +698,7 @@ textarea.form-control {
 // start at the same x down a list of lines. Minimum only.
 :root {
   --ct-addon-side-min-w: 5.5rem;
-  --ct-addon-method-min-w: 9.5rem;
+  --ct-addon-method-min-w: 8rem;
 }
 
 .input-group-text.addon-side {
@@ -736,8 +736,9 @@ textarea.form-control {
 
   // A payment method at the start of a money-location group
   // (`[Cash v][Main Vault v]`): sized to the longest method, "Bank Transfer",
-  // plus the clear x and chevron (152px measured = 9.5rem), so the location
-  // starts at the same x whichever method is picked.
+  // plus the chevron (127px measured = 8rem; the method is required, so its
+  // select shows no clear x), so the location starts at the same x whichever
+  // method is picked.
   > with-validation.addon-method {
     flex: 0 0 auto;
     min-width: var(--ct-addon-method-min-w);
