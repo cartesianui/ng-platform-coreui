@@ -113,6 +113,19 @@ $_dark-surface: #161922;
   --ct-row-pad:10px;
 }
 
+/* ---------------------------------------------------------------------------
+   FIELD WIDTH CAPS  (--ct-field-w-*)
+   Content-appropriate max widths for a form field the grid cannot cap: a short
+   field alone on a row, or one inside a full-width column (e.g. a half-width
+   side card). Used through the `.field-w-*` utilities in _theme.scss, so the
+   values stay out of templates. Same in every look and colour mode.
+   -------------------------------------------------------------------------- */
+:root {
+  --ct-field-w-sm:12rem;     /* dates, codes, short selects */
+  --ct-field-w-md:20rem;     /* IDs, phone, username, password */
+  --ct-field-w-lg:32rem;     /* names, email */
+}
+
 /* ============================================================================
    BRIDGE — re-point CoreUI (--cui-*) + Bootstrap (--bs-*) at the tokens.
    ----------------------------------------------------------------------------
