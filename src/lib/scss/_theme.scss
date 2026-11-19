@@ -337,14 +337,6 @@ textarea.form-control {
   resize: vertical;
 }
 
-// Field width caps — `.field-w-sm/md/lg` on a `.form-group` (or any wrapper)
-// cap a field the grid cannot: a short field alone on a row or inside a
-// full-width column. Values are the --ct-field-w-* tokens in _tokens.scss.
-// No Bootstrap/CoreUI variable or utility caps max-width to a length.
-.field-w-sm { max-width: var(--ct-field-w-sm); }
-.field-w-md { max-width: var(--ct-field-w-md); }
-.field-w-lg { max-width: var(--ct-field-w-lg); }
-
 // Form panels — one soft panel per form section (Identity, Contact, …) in the
 // party create/edit forms, replacing <hr /> + h6 separators that did not line
 // up across the two columns. Tokens only, so light, dark and per-app palettes
