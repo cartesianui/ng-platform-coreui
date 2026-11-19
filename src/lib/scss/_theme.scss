@@ -641,6 +641,47 @@ textarea.form-control {
   border-bottom-right-radius: 0;
 }
 
+// `<select-control>` as a part of an `.input-group` (e.g. the billing Source
+// type, `[Sale Order x v][SO lookup]`). The control keeps its own trigger,
+// clear button, chevron and themed list; this only joins it to its neighbour:
+// content width (it does not stretch), squared inner corners (Bootstrap's own
+// negative margin on the next child gives the 1px seam). Trigger and list are
+// not restyled.
+.input-group > select-control {
+  flex: 0 0 auto;
+}
+
+.input-group > select-control:not(:first-child) .sc-trigger {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input-group > select-control:not(:last-child) .sc-trigger {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+// Lift the focused part so its focus ring is not painted under the neighbour,
+// as Bootstrap does for a focused `.form-control` in a group.
+.input-group > select-control:focus-within {
+  position: relative;
+  z-index: 5;
+}
+
+// A type addon (`[Product][lookup]`, `[Service][lookup]`, `[Other Item][description]`):
+// one minimum width so the fields after it start at the same x down a list of
+// lines. Sized to the longest of those, "Other Item", in the addon font plus its
+// padding (94px measured); longer labels (e.g. "Platform Plan") still grow.
+// Minimum only.
+:root {
+  --ct-addon-type-min-w: 6rem;
+}
+
+.input-group-text.addon-type {
+  min-width: var(--ct-addon-type-min-w);
+  justify-content: center;
+}
+
 // Items area — internally scrolling, takes all remaining space.
 // `scrollbar-gutter: stable` reserves space for the thumb so the
 // content doesn't shift when the bar appears/disappears, and keeps
