@@ -337,6 +337,14 @@ textarea.form-control {
   resize: vertical;
 }
 
+// Field width caps — `.field-w-sm/md/lg` on a `.form-group` (or any wrapper)
+// cap a field the grid cannot: a short field alone on a row or inside a
+// full-width column. Values are the --ct-field-w-* tokens in _tokens.scss.
+// No Bootstrap/CoreUI variable or utility caps max-width to a length.
+.field-w-sm { max-width: var(--ct-field-w-sm); }
+.field-w-md { max-width: var(--ct-field-w-md); }
+.field-w-lg { max-width: var(--ct-field-w-lg); }
+
 // ============================================================
 // VALIDATION STATES
 // Tinted bg + tinted border for is-invalid / is-valid.
