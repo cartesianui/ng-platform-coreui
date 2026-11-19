@@ -668,12 +668,13 @@ textarea.form-control {
   z-index: 5;
 }
 
-// A type addon (`[Product][lookup]`, `[Service][lookup]`, `[Item][description]`):
+// A type addon (`[Product][lookup]`, `[Service][lookup]`, `[Other Item][description]`):
 // one minimum width so the fields after it start at the same x down a list of
-// lines. Sized to "Product"/"Service" in the addon font plus its padding (74px
-// measured); longer labels (e.g. "Platform Plan") still grow. Minimum only.
+// lines. Sized to the longest of those, "Other Item", in the addon font plus its
+// padding (94px measured); longer labels (e.g. "Platform Plan") still grow.
+// Minimum only.
 :root {
-  --ct-addon-type-min-w: 5rem;
+  --ct-addon-type-min-w: 6rem;
 }
 
 .input-group-text.addon-type {
