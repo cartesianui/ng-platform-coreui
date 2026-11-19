@@ -126,6 +126,19 @@ $_dark-surface: #161922;
   --ct-field-w-lg:32rem;     /* names, email */
 }
 
+/* ---------------------------------------------------------------------------
+   OFFCANVAS CONTENT WIDTH  (--ct-offcanvas-content-*)
+   Drawers open full width; their CONTENT is centred and capped so a form reads
+   at a comfortable "middle" width on large screens (owner reference: the
+   invoice form). Applied by <app-offcanvas> as body padding, so the scrollbar
+   stays at the drawer edge and height-bounded documents (bounded-form) keep
+   their layout. Hosts opt into the narrower tier with class="offcanvas-narrow".
+   -------------------------------------------------------------------------- */
+:root {
+  --ct-offcanvas-content-doc:1600px;    /* documents with line grids (default) */
+  --ct-offcanvas-content-form:1120px;   /* simple, master-data and party forms */
+}
+
 /* ============================================================================
    BRIDGE — re-point CoreUI (--cui-*) + Bootstrap (--bs-*) at the tokens.
    ----------------------------------------------------------------------------
