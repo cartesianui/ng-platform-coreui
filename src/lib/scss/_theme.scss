@@ -698,12 +698,19 @@ textarea.form-control {
 // start at the same x down a list of lines. Minimum only.
 :root {
   --ct-addon-side-min-w: 5.5rem;
-  --ct-addon-method-min-w: 10rem;
+  --ct-addon-method-min-w: 9.5rem;
 }
 
 .input-group-text.addon-side {
   min-width: var(--ct-addon-side-min-w);
   justify-content: center;
+}
+
+// The same method width for a bare `<select-control>` projected straight into
+// an input-group (the billing payment forms). Outranks the Source-sized
+// `.input-group > select-control` minimum above.
+.input-group > select-control.addon-method {
+  min-width: var(--ct-addon-method-min-w);
 }
 
 // An input-group whose parts EACH validate (`[Dr v][amount]`, both required):
@@ -729,8 +736,8 @@ textarea.form-control {
 
   // A payment method at the start of a money-location group
   // (`[Cash v][Main Vault v]`): sized to the longest method, "Bank Transfer",
-  // plus the clear x and chevron, so the location starts at the same x
-  // whichever method is picked.
+  // plus the clear x and chevron (152px measured = 9.5rem), so the location
+  // starts at the same x whichever method is picked.
   > with-validation.addon-method {
     flex: 0 0 auto;
     min-width: var(--ct-addon-method-min-w);
@@ -749,6 +756,15 @@ textarea.form-control {
   > with-validation:focus-within {
     position: relative;
     z-index: 5;
+  }
+
+  // One height for every part. select-control's trigger carries its own
+  // `min-height: 44px` (component style), taller than a line input, so the
+  // select stood a few px proud of the amount beside it. Inside a parts group
+  // the trigger sizes like the `.form-control` it is (same padding, border,
+  // line-height), so all parts share the input's height.
+  .sc-trigger {
+    min-height: 0;
   }
 }
 
