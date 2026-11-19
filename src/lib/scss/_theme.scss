@@ -691,6 +691,67 @@ textarea.form-control {
   justify-content: center;
 }
 
+// A debit/credit side at the start of an amount group (`[Dr v][amount]`,
+// `[Cr][amount]`). The side is two letters, so the Source-sized widths above
+// would waste the cell: one narrower minimum, shared by the side select (its
+// "Select" placeholder plus chevron) and the static side addon, so amounts
+// start at the same x down a list of lines. Minimum only.
+:root {
+  --ct-addon-side-min-w: 5.5rem;
+  --ct-addon-method-min-w: 10rem;
+}
+
+.input-group-text.addon-side {
+  min-width: var(--ct-addon-side-min-w);
+  justify-content: center;
+}
+
+// An input-group whose parts EACH validate (`[Dr v][amount]`, both required):
+// every part keeps its own `<with-validation>` so each still reports its own
+// error, and the wrappers become the group's flex items. Bootstrap's
+// `.input-group > :not(:first-child)` already gives the 1px seam on the
+// wrapper; this sizes the wrappers (outranking the bounded-form
+// "with-validation is full width" rule) and squares the inner corners.
+.input-group.input-group-parts {
+  flex-wrap: nowrap;
+
+  > with-validation {
+    display: block;
+    width: auto;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  > with-validation.addon-side {
+    flex: 0 0 auto;
+    min-width: var(--ct-addon-side-min-w);
+  }
+
+  // A payment method at the start of a money-location group
+  // (`[Cash v][Main Vault v]`): sized to the longest method, "Bank Transfer",
+  // plus the clear x and chevron, so the location starts at the same x
+  // whichever method is picked.
+  > with-validation.addon-method {
+    flex: 0 0 auto;
+    min-width: var(--ct-addon-method-min-w);
+  }
+
+  > with-validation:not(:last-child) :is(.form-control, .lookup-input-wrapper) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  > with-validation:not(:first-child) :is(.form-control, .lookup-input-wrapper) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  > with-validation:focus-within {
+    position: relative;
+    z-index: 5;
+  }
+}
+
 // Items area — internally scrolling, takes all remaining space.
 // `scrollbar-gutter: stable` reserves space for the thumb so the
 // content doesn't shift when the bar appears/disappears, and keeps
