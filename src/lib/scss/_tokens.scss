@@ -22,8 +22,16 @@
 //  the dark pass wires the dark `--ct-*` blocks below.
 // ============================================================================
 
+@use 'sass:color';
+@use 'variables' as *;
+
+// Dark-mode surface, also the base the dark primary soft/border are mixed on.
+$_dark-surface: #161922;
+
 /* ---------------------------------------------------------------------------
    PALETTE TOKENS  (--ct-*)
+   The brand family is derived from the Sass palette in _variables.scss
+   ($cartesian-indigo), so the brand colour is defined once.
    -------------------------------------------------------------------------- */
 :root,
 [data-theme="admin"][data-mode="light"] {
@@ -39,11 +47,11 @@
   --ct-text-muted:#5c6378;
   --ct-text-faint:#9298ad;
   /* brand */
-  --ct-primary:#5164fc;      --ct-primary-rgb:81,100,252;   /* Keelhand brand */
-  --ct-primary-hover:#4555d6;   /* primary shaded 15% */
-  --ct-on-primary:#ffffff;
-  --ct-primary-soft:#eff1ff;    /* primary tinted 91% */
-  --ct-primary-border:#dce0fe;  /* primary tinted 80% */
+  --ct-primary:#{$cartesian-indigo};  --ct-primary-rgb:#{rgb-channels($cartesian-indigo)};  /* Keelhand brand */
+  --ct-primary-hover:#{$primary-dark};
+  --ct-on-primary:#{$white};
+  --ct-primary-soft:#{color.mix(white, $cartesian-indigo, $cartesian-tint-soft)};
+  --ct-primary-border:#{color.mix(white, $cartesian-indigo, $cartesian-tint-border)};
   /* status */
   --ct-success:#15914b;  --ct-success-rgb:21,145,75;   --ct-success-soft:#e6f5ec;
   --ct-warning:#b8730a;  --ct-warning-rgb:184,115,10;  --ct-warning-soft:#fbf0df;
@@ -60,7 +68,7 @@
 [data-coreui-theme="dark"] {
   color-scheme: dark;
   --ct-canvas:#0d0f17;       --ct-canvas-rgb:13,15,23;
-  --ct-surface:#161922;
+  --ct-surface:#{$_dark-surface};
   --ct-surface-2:#1b1f2a;
   --ct-surface-3:#232838;
   --ct-border:#2a2f3e;
@@ -68,11 +76,12 @@
   --ct-text:#e8eaf4;         --ct-text-rgb:232,234,244;
   --ct-text-muted:#9aa0b6;
   --ct-text-faint:#69708a;
-  --ct-primary:#7483fd;      --ct-primary-rgb:116,131,253;  /* brand tinted 20% */
-  --ct-primary-hover:#8592fd;   /* brand tinted 30% */
-  --ct-on-primary:#ffffff;
-  --ct-primary-soft:#212649;    /* brand 18% over surface */
-  --ct-primary-border:#2b336e;  /* brand 35% over surface */
+  --ct-primary:#{color.mix(white, $cartesian-indigo, 20%)};
+  --ct-primary-rgb:#{rgb-channels(color.mix(white, $cartesian-indigo, 20%))};
+  --ct-primary-hover:#{color.mix(white, $cartesian-indigo, 30%)};
+  --ct-on-primary:#{$white};
+  --ct-primary-soft:#{color.mix($cartesian-indigo, $_dark-surface, 18%)};
+  --ct-primary-border:#{color.mix($cartesian-indigo, $_dark-surface, 35%)};
   --ct-success:#34c47a;  --ct-success-rgb:52,196,122;  --ct-success-soft:#10271c;
   --ct-warning:#e0a13a;  --ct-warning-rgb:224,161,58;  --ct-warning-soft:#2a2010;
   --ct-danger:#f0726f;   --ct-danger-rgb:240,114,111;  --ct-danger-soft:#2c1517;

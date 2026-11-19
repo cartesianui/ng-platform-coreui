@@ -1,4 +1,20 @@
+@use 'sass:color';
+@use 'sass:math';
 @use 'fonts';
+
+// "r,g,b" channel list for a colour, for the `--ct-*-rgb` tokens that feed
+// rgba(var(--ct-*-rgb), a). Lets _tokens.scss derive them from the Sass
+// palette instead of restating the channels by hand.
+@function rgb-channels($c) {
+  @return math.round(color.channel($c, "red", $space: rgb)) + ","
+    + math.round(color.channel($c, "green", $space: rgb)) + ","
+    + math.round(color.channel($c, "blue", $space: rgb));
+}
+
+// Brand shade steps (used for the primary token family in _tokens.scss).
+$cartesian-shade-hover: 15%;   // hover / active = brand mixed with black
+$cartesian-tint-soft:   91%;   // soft bg        = brand mixed with white
+$cartesian-tint-border: 80%;   // soft border    = brand mixed with white
 
 // ==========================================================================
 // PALETTE — single source of truth for Cartesian brand colours.
@@ -123,7 +139,7 @@ $dark:      $gray-900;
 // Hover / dark variants — deliberate distinct shades, not algorithmic.
 // `$dark-dark` matches `$dark` because the dark slot is already at the
 // darkest end of the scale; kept for symmetry with the with() mapping.
-$primary-dark:   #4555d6;   // brand hover/active (matches --ct-primary-hover)
+$primary-dark:   color.mix(black, $cartesian-indigo, $cartesian-shade-hover);   // brand hover/active (= --ct-primary-hover)
 $secondary-dark: #212233;
 $success-dark:   #1b9e3e;
 $info-dark:      #2982cc;
