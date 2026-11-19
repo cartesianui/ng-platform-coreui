@@ -39,18 +39,18 @@
   --ct-text-muted:#5c6378;
   --ct-text-faint:#9298ad;
   /* brand */
-  --ct-primary:#4f46e5;      --ct-primary-rgb:79,70,229;
-  --ct-primary-hover:#4338ca;
+  --ct-primary:#5164fc;      --ct-primary-rgb:81,100,252;   /* Keelhand brand */
+  --ct-primary-hover:#4555d6;   /* primary shaded 15% */
   --ct-on-primary:#ffffff;
-  --ct-primary-soft:#ececff;
-  --ct-primary-border:#d7d8ff;
+  --ct-primary-soft:#eff1ff;    /* primary tinted 91% */
+  --ct-primary-border:#dce0fe;  /* primary tinted 80% */
   /* status */
   --ct-success:#15914b;  --ct-success-rgb:21,145,75;   --ct-success-soft:#e6f5ec;
   --ct-warning:#b8730a;  --ct-warning-rgb:184,115,10;  --ct-warning-soft:#fbf0df;
   --ct-danger:#d23a3a;   --ct-danger-rgb:210,58,58;    --ct-danger-soft:#fbe9e9;
   --ct-info:#2563eb;     --ct-info-rgb:37,99,235;      --ct-info-soft:#e7eefe;
-  /* focus ring */
-  --ct-ring:rgba(79,70,229,.32);
+  /* focus ring — follows whatever --ct-primary-rgb the app sets */
+  --ct-ring:rgba(var(--ct-primary-rgb),.32);
 }
 
 /* admin dark — also the DEFAULT dark palette, activated by CoreUI's
@@ -68,16 +68,16 @@
   --ct-text:#e8eaf4;         --ct-text-rgb:232,234,244;
   --ct-text-muted:#9aa0b6;
   --ct-text-faint:#69708a;
-  --ct-primary:#7e76f1;      --ct-primary-rgb:126,118,241;
-  --ct-primary-hover:#9089f5;
+  --ct-primary:#7483fd;      --ct-primary-rgb:116,131,253;  /* brand tinted 20% */
+  --ct-primary-hover:#8592fd;   /* brand tinted 30% */
   --ct-on-primary:#ffffff;
-  --ct-primary-soft:#23254a;
-  --ct-primary-border:#39357a;
+  --ct-primary-soft:#212649;    /* brand 18% over surface */
+  --ct-primary-border:#2b336e;  /* brand 35% over surface */
   --ct-success:#34c47a;  --ct-success-rgb:52,196,122;  --ct-success-soft:#10271c;
   --ct-warning:#e0a13a;  --ct-warning-rgb:224,161,58;  --ct-warning-soft:#2a2010;
   --ct-danger:#f0726f;   --ct-danger-rgb:240,114,111;  --ct-danger-soft:#2c1517;
   --ct-info:#5e9bf6;     --ct-info-rgb:94,155,246;     --ct-info-soft:#11203a;
-  --ct-ring:rgba(126,118,241,.42);
+  --ct-ring:rgba(var(--ct-primary-rgb),.42);
 }
 
 [data-theme="care"][data-mode="light"] {

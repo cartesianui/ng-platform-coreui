@@ -8,7 +8,7 @@
 
 // Brand colours
 $cartesian-blue:   #1a73e8;
-$cartesian-indigo: #4f46e5;   // admin/default brand (matches --ct-primary); was #5a67d8
+$cartesian-indigo: #5164fc;   // Keelhand brand, admin/default (matches --ct-primary); was #4f46e5
 $cartesian-purple: #7e5bef;
 $cartesian-pink:   #ff5d8f;
 $cartesian-red:    #e63946;
@@ -123,7 +123,7 @@ $dark:      $gray-900;
 // Hover / dark variants — deliberate distinct shades, not algorithmic.
 // `$dark-dark` matches `$dark` because the dark slot is already at the
 // darkest end of the scale; kept for symmetry with the with() mapping.
-$primary-dark:   #4338ca;   // brand hover/active (matches --ct-primary-hover)
+$primary-dark:   #4555d6;   // brand hover/active (matches --ct-primary-hover)
 $secondary-dark: #212233;
 $success-dark:   #1b9e3e;
 $info-dark:      #2982cc;
