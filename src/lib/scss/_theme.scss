@@ -649,6 +649,8 @@ textarea.form-control {
 // not restyled.
 .input-group > select-control {
   flex: 0 0 auto;
+  // Same width empty and selected, so picking a type does not shift the lookup.
+  min-width: var(--ct-addon-select-min-w);
 }
 
 .input-group > select-control:not(:first-child) .sc-trigger {
@@ -675,6 +677,10 @@ textarea.form-control {
 // Minimum only.
 :root {
   --ct-addon-type-min-w: 6rem;
+  // A select-control at the start of an input-group (billing Source type): the
+  // longest option, "Purchase Order" (bill), plus the clear x and the chevron
+  // measures 165px; "Delivery Note" 154px, "Subscription" 147px.
+  --ct-addon-select-min-w: 10.5rem;
 }
 
 .input-group-text.addon-type {
