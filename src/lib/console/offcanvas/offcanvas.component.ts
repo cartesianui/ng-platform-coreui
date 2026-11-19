@@ -1,9 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { ACTIONS_HEADER_HOST, ActionsHeaderSlot } from '@cartesianui/platform-common';
 
 @Component({
   selector: 'app-offcanvas',
   templateUrl: './offcanvas.component.html',
   standalone: false,
+  // `providers`, not `viewProviders`: the forms are PROJECTED into the drawer from the listing's
+  // template, and only `providers` reach projected content.
+  providers: [{ provide: ACTIONS_HEADER_HOST, useFactory: () => new ActionsHeaderSlot() }],
   styles: [
     `
       /* ensure the offcanvas takes full viewport height and body doesn't scroll */
@@ -33,6 +37,55 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       .offcanvas-header {
         flex-shrink: 0;
       }
+
+      /* Title bar: [title …][actions][×]. The title takes the room that is left and truncates
+         (full text in its tooltip). When the actions don't fit beside the title they wrap onto a
+         second line under it. The × is pinned to the first line, in a column of its own, so
+         nothing can slide under it; it still comes last in the DOM, so focus runs title →
+         actions → ×. Every first-line item shares one height, the action buttons' (2.375rem); with
+         0.5rem padding the bar stays 54px, the same as a title-only drawer had, so the form gets
+         the whole former action row back. */
+      .offcanvas-header {
+        --app-offcanvas-header-row: 2.375rem;
+        --app-offcanvas-header-gap: 0.75rem;
+        --app-offcanvas-close-size: 2rem;
+        position: relative;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem var(--app-offcanvas-header-gap);
+        padding-block: 0.5rem;
+        padding-inline-end: calc(var(--cui-offcanvas-padding-x) + var(--app-offcanvas-close-size) + var(--app-offcanvas-header-gap));
+      }
+      .offcanvas-title {
+        flex: 1 1 12rem;
+        min-width: 0;
+        min-height: var(--app-offcanvas-header-row);
+        line-height: var(--app-offcanvas-header-row);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .offcanvas-header-actions {
+        display: flex;
+        flex: 0 1 auto;
+        min-width: 0;
+        margin-inline-start: auto;
+        align-items: center;
+        min-height: var(--app-offcanvas-header-row);
+      }
+      .offcanvas-header-actions:empty {
+        display: none;
+      }
+      .offcanvas-header > .btn-close {
+        position: absolute;
+        top: 0.5rem;
+        inset-inline-end: var(--cui-offcanvas-padding-x);
+        width: var(--app-offcanvas-close-size);
+        height: var(--app-offcanvas-header-row);
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
       .offcanvas-body {
         overflow-y: auto;
         flex: 1 1 auto;
@@ -42,7 +95,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     `
   ]
 })
-export class OffcanvasComponent {
+export class OffcanvasComponent implements OnInit, OnDestroy {
   @Input() id: string;
   @Input() title: string;
   @Input() subTitle: string;
@@ -59,6 +112,17 @@ export class OffcanvasComponent {
   @Input() width?: string;
 
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter();
+
+  @ViewChild('headerActions', { static: true }) private headerActions: ElementRef<HTMLElement>;
+  private readonly headerSlot = inject(ACTIONS_HEADER_HOST, { self: true }) as ActionsHeaderSlot;
+
+  ngOnInit(): void {
+    this.headerSlot.connect(this.headerActions.nativeElement);
+  }
+
+  ngOnDestroy(): void {
+    this.headerSlot.disconnect();
+  }
 
   public constructor() {}
 

@@ -8,7 +8,10 @@
   (visibleChange)="visibleChange.emit($event)">
 
   <div cOffcanvasHeader class="offcanvas-header">
-    <h5 cOffcanvasTitle>{{ title }}</h5>
+    <h5 cOffcanvasTitle [attr.title]="title || null">{{ title }}</h5>
+    <!-- The form's <default-actions> row moves in here (ACTIONS_HEADER_HOST), between the title
+         and the close button. Empty when the drawer's content has none. -->
+    <div #headerActions class="offcanvas-header-actions"></div>
     <button cButtonClose class="text-reset" [cOffcanvasToggle]="id" aria-label="Close"></button>
   </div>
 
