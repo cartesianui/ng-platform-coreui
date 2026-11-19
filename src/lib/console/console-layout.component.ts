@@ -29,9 +29,14 @@ export class ConsoleLayoutComponent {
   // brand swaps to the all-white reverse artwork in dark mode to stay legible.
   private readonly colorMode = inject(ColorModeService).colorMode;
   private readonly isDark = computed(() => this.colorMode() === 'dark');
+  // Sized by HEIGHT, not width: each app's logo is the "Keelhand | <App>"
+  // lockup, whose width varies with the name (aspect ≈ 3.9 for AI up to 5.3
+  // for Console). A fixed 170px width made AI 44px tall in a 49px header and
+  // Console 32px; a fixed 30px height keeps every app's mark the same size
+  // (116–160px wide).
   protected readonly brandFull = computed(() => ({
     src: `assets/img/brand/${this.isDark() ? 'logo-reverse' : 'logo'}.svg`,
-    width: 170,
+    height: 30,
     alt: 'Keelhand'
   }));
   protected readonly brandNarrow = computed(() => ({
