@@ -345,6 +345,24 @@ textarea.form-control {
 .field-w-md { max-width: var(--ct-field-w-md); }
 .field-w-lg { max-width: var(--ct-field-w-lg); }
 
+// Form panels — one soft panel per form section (Identity, Contact, …) in the
+// party create/edit forms, replacing <hr /> + h6 separators that did not line
+// up across the two columns. Tokens only, so light, dark and per-app palettes
+// (Care redefines --ct-surface-2 / --ct-border-soft) follow automatically. The
+// bottom padding is 0 because the last .form-group already carries 1rem.
+.form-panel {
+  background-color: var(--ct-surface-2);
+  border: 1px solid var(--ct-border-soft);
+  border-radius: var(--ct-radius-sm);
+  padding: 1rem 1rem 0;
+}
+.form-panel-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;           // matches $h6-font-size in styles.scss
+  font-weight: 600;              // $headings-font-weight
+  color: var(--cui-secondary-color);   // what .text-muted resolves to
+}
+
 // ============================================================
 // VALIDATION STATES
 // Tinted bg + tinted border for is-invalid / is-valid.
