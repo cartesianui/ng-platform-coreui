@@ -17,6 +17,18 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         z-index: 1050;
       }
 
+      /* CoreUI's c-offcanvas renders an inner wrapper <div> between the
+         .offcanvas host and header/body. Without a bounded flex column on it,
+         .offcanvas-body sizes to its content and runs past the viewport, so
+         height-bounded documents (bounded-form: SO/PO/DN/RN/…) get their
+         bottom clipped instead of scrolling. Bind the wrapper to the host. */
+      ::ng-deep c-offcanvas.offcanvas > div {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 0;
+      }
+
       /* keep header fixed, let body scroll internally */
       .offcanvas-header {
         flex-shrink: 0;
