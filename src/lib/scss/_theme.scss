@@ -356,6 +356,11 @@ textarea.form-control {
   border-radius: var(--ct-radius-sm);
   padding: 1rem 1rem 0;
 }
+.form-panel-compact {
+  // Untitled grouping panel (side-header document header cards, spec §2):
+  // the fields are self-descriptive, so no title and a tighter inset.
+  padding: 0.75rem 0.75rem 0;
+}
 .form-panel-title {
   margin: 0 0 0.75rem;
   font-size: 0.875rem;           // matches $h6-font-size in styles.scss
