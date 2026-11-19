@@ -60,18 +60,23 @@ $cartesian-input-placeholder:      #9ca3af;
 $cartesian-form-label-color:       #374151;
 $cartesian-input-group-addon-bg:   #f1f5f9;
 
-// Status colours — the SAME values as the runtime --ct-success / --ct-warning
-// tokens (_tokens.scss), so compile-time `.btn-*` / `.bg-*` / feedback colours
-// match the bridged runtime colours. The bright $cartesian-green / -yellow
-// palette entries stay for anything that wants the raw hue.
-$cartesian-success:      #15914b;   // --ct-success (light)
+// Status colours — the SAME values as the runtime --ct-success / -warning /
+// -danger / -info tokens (_tokens.scss), so compile-time `.btn-*` / `.bg-*` /
+// feedback colours match the bridged runtime colours: one colour per status.
+// The raw $cartesian-green / -yellow / -red / -cyan palette entries stay for
+// anything that wants the raw hue.
+$cartesian-success:      #148846;   // --ct-success (light) — white text 4.53:1
 $cartesian-warning:      #b8730a;   // --ct-warning (light)
+$cartesian-danger:       #d23a3a;   // --ct-danger  (light)
+$cartesian-info:         #2563eb;   // --ct-info    (light)
 $cartesian-success-dark: #34c47a;   // --ct-success (dark mode)
 $cartesian-warning-dark: #e0a13a;   // --ct-warning (dark mode)
+$cartesian-danger-dark:  #f0726f;   // --ct-danger  (dark mode)
+$cartesian-info-dark:    #5e9bf6;   // --ct-info    (dark mode)
 
 // Validation-state borders for is-invalid / is-valid inputs — follow the
 // danger / success status colours.
-$cartesian-invalid-border: $cartesian-red;
+$cartesian-invalid-border: $cartesian-danger;
 $cartesian-valid-border:   $cartesian-success;
 
 // Typography — IBM Plex Sans (UI) + IBM Plex Mono (numeric/identifier columns).
@@ -139,9 +144,9 @@ $cyan:   $cartesian-cyan;
 $primary:   $indigo;
 $secondary: $gray-600;
 $success:   $cartesian-success;
-$info:      $cyan;
+$info:      $cartesian-info;
 $warning:   $cartesian-warning;
-$danger:    $red;
+$danger:    $cartesian-danger;
 $light:     $gray-200;
 $dark:      $gray-900;
 
@@ -151,9 +156,9 @@ $dark:      $gray-900;
 $primary-dark:   color.mix(black, $cartesian-indigo, $cartesian-shade-hover);   // brand hover/active (= --ct-primary-hover)
 $secondary-dark: #212233;
 $success-dark:   $cartesian-success-dark;
-$info-dark:      #2982cc;
+$info-dark:      $cartesian-info-dark;
 $warning-dark:   $cartesian-warning-dark;
-$danger-dark:    #d93737;
+$danger-dark:    $cartesian-danger-dark;
 $light-dark:     $gray-100;
 $dark-dark:      $gray-900;
 
