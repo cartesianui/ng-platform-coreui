@@ -324,8 +324,11 @@ typeahead-container {
 
   // Required marker — red asterisk after the label (forms that opt in via
   // `.form-group.required`). Matches the mockup's `Full name *`.
+  // Only the FIELD label (a direct child of the group or of its
+  // <with-validation>): a descendant selector also starred the <label> that
+  // controls such as choosable-control wrap around each option ("Draft*").
   &.required > label::after,
-  &.required with-validation label::after {
+  &.required with-validation > label::after {
     content: " *";
     color: var(--cui-danger);
     font-weight: 700;
