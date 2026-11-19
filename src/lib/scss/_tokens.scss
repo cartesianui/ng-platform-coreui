@@ -52,11 +52,11 @@ $_dark-surface: #161922;
   --ct-on-primary:#{$white};
   --ct-primary-soft:#{color.mix(white, $cartesian-indigo, $cartesian-tint-soft)};
   --ct-primary-border:#{color.mix(white, $cartesian-indigo, $cartesian-tint-border)};
-  /* status */
-  --ct-success:#15914b;  --ct-success-rgb:21,145,75;   --ct-success-soft:#e6f5ec;
-  --ct-warning:#b8730a;  --ct-warning-rgb:184,115,10;  --ct-warning-soft:#fbf0df;
-  --ct-danger:#d23a3a;   --ct-danger-rgb:210,58,58;    --ct-danger-soft:#fbe9e9;
-  --ct-info:#2563eb;     --ct-info-rgb:37,99,235;      --ct-info-soft:#e7eefe;
+  /* status — from the Sass status colours in _variables.scss */
+  --ct-success:#{$cartesian-success};  --ct-success-rgb:#{rgb-channels($cartesian-success)};  --ct-success-soft:#e6f5ec;
+  --ct-warning:#{$cartesian-warning};  --ct-warning-rgb:#{rgb-channels($cartesian-warning)};  --ct-warning-soft:#fbf0df;
+  --ct-danger:#{$cartesian-danger};    --ct-danger-rgb:#{rgb-channels($cartesian-danger)};    --ct-danger-soft:#fbe9e9;
+  --ct-info:#{$cartesian-info};        --ct-info-rgb:#{rgb-channels($cartesian-info)};        --ct-info-soft:#e7eefe;
   /* focus ring — follows whatever --ct-primary-rgb the app sets */
   --ct-ring:rgba(var(--ct-primary-rgb),.32);
 }
@@ -82,10 +82,10 @@ $_dark-surface: #161922;
   --ct-on-primary:#{$white};
   --ct-primary-soft:#{color.mix($cartesian-indigo, $_dark-surface, 18%)};
   --ct-primary-border:#{color.mix($cartesian-indigo, $_dark-surface, 35%)};
-  --ct-success:#34c47a;  --ct-success-rgb:52,196,122;  --ct-success-soft:#10271c;
-  --ct-warning:#e0a13a;  --ct-warning-rgb:224,161,58;  --ct-warning-soft:#2a2010;
-  --ct-danger:#f0726f;   --ct-danger-rgb:240,114,111;  --ct-danger-soft:#2c1517;
-  --ct-info:#5e9bf6;     --ct-info-rgb:94,155,246;     --ct-info-soft:#11203a;
+  --ct-success:#{$cartesian-success-dark};  --ct-success-rgb:#{rgb-channels($cartesian-success-dark)};  --ct-success-soft:#10271c;
+  --ct-warning:#{$cartesian-warning-dark};  --ct-warning-rgb:#{rgb-channels($cartesian-warning-dark)};  --ct-warning-soft:#2a2010;
+  --ct-danger:#{$cartesian-danger-dark};    --ct-danger-rgb:#{rgb-channels($cartesian-danger-dark)};    --ct-danger-soft:#2c1517;
+  --ct-info:#{$cartesian-info-dark};        --ct-info-rgb:#{rgb-channels($cartesian-info-dark)};        --ct-info-soft:#11203a;
   --ct-ring:rgba(var(--ct-primary-rgb),.42);
 }
 
