@@ -762,10 +762,41 @@ textarea.form-control {
 }
 
 .doc-totals__field-label {
+  // Same look as the form's field labels (.form-group > label): one label
+  // style across the header card and the totals footer.
   margin: 0 !important;
-  font-size: 0.75rem;                  // 12px
-  color: var(--cui-secondary-color);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--cui-body-color);
   flex-shrink: 0;
+}
+
+// Field widths inside the footer. `.bounded-form` pins every `input.form-control`
+// to `width: 100%` (and an `.input-group` input to `width: 1%; flex: 1 1 auto`),
+// which outranked the 7rem below and stretched Discount across the row. These
+// selectors match that weight and come later, so the footer keeps its sizes.
+.doc-totals .doc-totals__field input.doc-totals__field-input {
+  width: 7rem;
+  flex: 0 0 auto;
+}
+
+// Method | amount input-group (e.g. Shipping): the picker takes the room, the
+// read-only amount is a fixed right segment with tabular figures.
+.doc-totals .doc-totals__field > .input-group {
+  width: 18rem;
+  flex-wrap: nowrap;
+}
+
+.doc-totals .doc-totals__field .input-group > input.form-control {
+  width: 7rem;
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+// A switch (e.g. Apply Tax) centred on the inputs: drop the form-check's
+// bottom margin so it shares their baseline.
+.doc-totals__field .form-check {
+  margin-bottom: 0;
 }
 
 .doc-totals__field-input {
