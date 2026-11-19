@@ -18,6 +18,12 @@ body {
 // would be invisible on the dark surface, so use adaptive body text.
 .badge.bg-light { color: var(--ct-text) !important; }
 
+// Tables: Inter tabular figures so amounts line up down a column (no
+// Bootstrap/CoreUI variable exists for font-variant-numeric). The datatable
+// equivalent is in _datatable.scss; amount read-outs (.doc-totals,
+// .balance-strip, .summary-card) already set it.
+.table { font-variant-numeric: tabular-nums; }
+
 // Wizard stepper panel — themed surface (the `bg-white` utility was removed
 // from the markup so it adapts to dark; `border`/`rounded` still apply).
 .wizard-stepper {
