@@ -1609,3 +1609,18 @@ typeahead-container {
     box-shadow: 0 0 0 2px var(--ct-ring);
   }
 }
+
+// Status explainer as the header badge's caption (spec §5 rev 19): when
+// <value-info> is the first child of a card body it sits close under the
+// header and close above the first panel, about half the default gaps
+// (owner, 2026-11-19). The host's `mt-2` utility is !important, hence the
+// override here; the inner hint drops its own top/bottom margins.
+.card-body > value-info:first-child {
+  margin-top: calc(var(--cui-card-spacer-y, 1rem) * -0.125) !important;
+  margin-bottom: calc(var(--cui-card-spacer-y, 1rem) * -0.25);
+}
+
+.card-body > value-info:first-child > .form-text {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
