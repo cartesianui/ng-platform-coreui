@@ -10,7 +10,10 @@
 //  `--ct-*` tokens.
 //
 //  Axes (the full system, kept live for future per-app runtime switching):
-//    data-theme = admin | care      (color only)
+//    data-theme = admin             (color only; each app re-colors by
+//                                    redefining --ct-* in its own
+//                                    apps/<app>/scss/style.scss — Care's
+//                                    palette lives only in apps/care)
 //    data-mode  = light | dark      (handled by data-coreui-theme at runtime)
 //    data-look  = a | b             (shape / density only)
 //
@@ -22,8 +25,16 @@
 //  the dark pass wires the dark `--ct-*` blocks below.
 // ============================================================================
 
+@use 'sass:color';
+@use 'variables' as *;
+
+// Dark-mode surface, also the base the dark primary soft/border are mixed on.
+$_dark-surface: #161922;
+
 /* ---------------------------------------------------------------------------
    PALETTE TOKENS  (--ct-*)
+   The brand family is derived from the Sass palette in _variables.scss
+   ($cartesian-indigo), so the brand colour is defined once.
    -------------------------------------------------------------------------- */
 :root,
 [data-theme="admin"][data-mode="light"] {
@@ -39,18 +50,18 @@
   --ct-text-muted:#5c6378;
   --ct-text-faint:#9298ad;
   /* brand */
-  --ct-primary:#4f46e5;      --ct-primary-rgb:79,70,229;
-  --ct-primary-hover:#4338ca;
-  --ct-on-primary:#ffffff;
-  --ct-primary-soft:#ececff;
-  --ct-primary-border:#d7d8ff;
-  /* status */
-  --ct-success:#15914b;  --ct-success-rgb:21,145,75;   --ct-success-soft:#e6f5ec;
-  --ct-warning:#b8730a;  --ct-warning-rgb:184,115,10;  --ct-warning-soft:#fbf0df;
-  --ct-danger:#d23a3a;   --ct-danger-rgb:210,58,58;    --ct-danger-soft:#fbe9e9;
-  --ct-info:#2563eb;     --ct-info-rgb:37,99,235;      --ct-info-soft:#e7eefe;
-  /* focus ring */
-  --ct-ring:rgba(79,70,229,.32);
+  --ct-primary:#{$cartesian-indigo};  --ct-primary-rgb:#{rgb-channels($cartesian-indigo)};  /* Keelhand brand */
+  --ct-primary-hover:#{$primary-dark};
+  --ct-on-primary:#{$white};
+  --ct-primary-soft:#{color.mix(white, $cartesian-indigo, $cartesian-tint-soft)};
+  --ct-primary-border:#{color.mix(white, $cartesian-indigo, $cartesian-tint-border)};
+  /* status — from the Sass status colours in _variables.scss */
+  --ct-success:#{$cartesian-success};  --ct-success-rgb:#{rgb-channels($cartesian-success)};  --ct-success-soft:#e6f5ec;
+  --ct-warning:#{$cartesian-warning};  --ct-warning-rgb:#{rgb-channels($cartesian-warning)};  --ct-warning-soft:#fbf0df;
+  --ct-danger:#{$cartesian-danger};    --ct-danger-rgb:#{rgb-channels($cartesian-danger)};    --ct-danger-soft:#fbe9e9;
+  --ct-info:#{$cartesian-info};        --ct-info-rgb:#{rgb-channels($cartesian-info)};        --ct-info-soft:#e7eefe;
+  /* focus ring — follows whatever --ct-primary-rgb the app sets */
+  --ct-ring:rgba(var(--ct-primary-rgb),.32);
 }
 
 /* admin dark — also the DEFAULT dark palette, activated by CoreUI's
@@ -60,7 +71,7 @@
 [data-coreui-theme="dark"] {
   color-scheme: dark;
   --ct-canvas:#0d0f17;       --ct-canvas-rgb:13,15,23;
-  --ct-surface:#161922;
+  --ct-surface:#{$_dark-surface};
   --ct-surface-2:#1b1f2a;
   --ct-surface-3:#232838;
   --ct-border:#2a2f3e;
@@ -68,60 +79,17 @@
   --ct-text:#e8eaf4;         --ct-text-rgb:232,234,244;
   --ct-text-muted:#9aa0b6;
   --ct-text-faint:#69708a;
-  --ct-primary:#7e76f1;      --ct-primary-rgb:126,118,241;
-  --ct-primary-hover:#9089f5;
-  --ct-on-primary:#ffffff;
-  --ct-primary-soft:#23254a;
-  --ct-primary-border:#39357a;
-  --ct-success:#34c47a;  --ct-success-rgb:52,196,122;  --ct-success-soft:#10271c;
-  --ct-warning:#e0a13a;  --ct-warning-rgb:224,161,58;  --ct-warning-soft:#2a2010;
-  --ct-danger:#f0726f;   --ct-danger-rgb:240,114,111;  --ct-danger-soft:#2c1517;
-  --ct-info:#5e9bf6;     --ct-info-rgb:94,155,246;     --ct-info-soft:#11203a;
-  --ct-ring:rgba(126,118,241,.42);
-}
-
-[data-theme="care"][data-mode="light"] {
-  --ct-canvas:#eff6f4;       --ct-canvas-rgb:239,246,244;
-  --ct-surface:#ffffff;
-  --ct-surface-2:#f4faf8;
-  --ct-surface-3:#e8f2f0;
-  --ct-border:#dde9e6;
-  --ct-border-soft:#e8f1ef;
-  --ct-text:#10201d;         --ct-text-rgb:16,32,29;
-  --ct-text-muted:#4d615c;
-  --ct-text-faint:#8aa09b;
-  --ct-primary:#0c8f82;      --ct-primary-rgb:12,143,130;
-  --ct-primary-hover:#0a766b;
-  --ct-on-primary:#ffffff;
-  --ct-primary-soft:#dff3f0;
-  --ct-primary-border:#bfe6e0;
-  --ct-success:#15914b;  --ct-success-rgb:21,145,75;   --ct-success-soft:#e2f3e9;
-  --ct-warning:#b8730a;  --ct-warning-rgb:184,115,10;  --ct-warning-soft:#f8efdc;
-  --ct-danger:#cf4040;   --ct-danger-rgb:207,64,64;    --ct-danger-soft:#f9e8e8;
-  --ct-info:#1f7fae;     --ct-info-rgb:31,127,174;     --ct-info-soft:#e2f0f6;
-  --ct-ring:rgba(12,143,130,.3);
-}
-
-[data-theme="care"][data-mode="dark"] {
-  --ct-canvas:#071210;       --ct-canvas-rgb:7,18,16;
-  --ct-surface:#0e1a18;
-  --ct-surface-2:#13201d;
-  --ct-surface-3:#1a2825;
-  --ct-border:#243430;
-  --ct-border-soft:#1d2a27;
-  --ct-text:#e1efec;         --ct-text-rgb:225,239,236;
-  --ct-text-muted:#8ba6a0;
-  --ct-text-faint:#5f756f;
-  --ct-primary:#2cd4bf;      --ct-primary-rgb:44,212,191;
-  --ct-primary-hover:#46e0cd;
-  --ct-on-primary:#06120f;
-  --ct-primary-soft:#103029;
-  --ct-primary-border:#1d4d44;
-  --ct-success:#34c47a;  --ct-success-rgb:52,196,122;  --ct-success-soft:#0f2a1d;
-  --ct-warning:#e0a13a;  --ct-warning-rgb:224,161,58;  --ct-warning-soft:#2a2110;
-  --ct-danger:#ef7270;   --ct-danger-rgb:239,114,112;  --ct-danger-soft:#2c1717;
-  --ct-info:#4fb3d9;     --ct-info-rgb:79,179,217;     --ct-info-soft:#0f2733;
-  --ct-ring:rgba(44,212,191,.4);
+  --ct-primary:#{color.mix(white, $cartesian-indigo, 20%)};
+  --ct-primary-rgb:#{rgb-channels(color.mix(white, $cartesian-indigo, 20%))};
+  --ct-primary-hover:#{color.mix(white, $cartesian-indigo, 30%)};
+  --ct-on-primary:#{$white};
+  --ct-primary-soft:#{color.mix($cartesian-indigo, $_dark-surface, 18%)};
+  --ct-primary-border:#{color.mix($cartesian-indigo, $_dark-surface, 35%)};
+  --ct-success:#{$cartesian-success-dark};  --ct-success-rgb:#{rgb-channels($cartesian-success-dark)};  --ct-success-soft:#10271c;
+  --ct-warning:#{$cartesian-warning-dark};  --ct-warning-rgb:#{rgb-channels($cartesian-warning-dark)};  --ct-warning-soft:#2a2010;
+  --ct-danger:#{$cartesian-danger-dark};    --ct-danger-rgb:#{rgb-channels($cartesian-danger-dark)};    --ct-danger-soft:#2c1517;
+  --ct-info:#{$cartesian-info-dark};        --ct-info-rgb:#{rgb-channels($cartesian-info-dark)};        --ct-info-soft:#11203a;
+  --ct-ring:rgba(var(--ct-primary-rgb),.42);
 }
 
 /* ---------------------------------------------------------------------------
@@ -149,7 +117,7 @@
    BRIDGE — re-point CoreUI (--cui-*) + Bootstrap (--bs-*) at the tokens.
    ----------------------------------------------------------------------------
    Applies in BOTH light and dark: `--ct-*` resolves to whichever palette is
-   active on <html> (admin/care × light/dark — the dark blocks above override
+   active on <html> (app palette × light/dark — the dark blocks above override
    the :root light values when `data-coreui-theme="dark"` is set). Emitted last
    in styles.scss so it wins over CoreUI's own dark root defaults.
    ========================================================================== */

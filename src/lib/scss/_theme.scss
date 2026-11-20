@@ -18,6 +18,12 @@ body {
 // would be invisible on the dark surface, so use adaptive body text.
 .badge.bg-light { color: var(--ct-text) !important; }
 
+// Tables: Inter tabular figures so amounts line up down a column (no
+// Bootstrap/CoreUI variable exists for font-variant-numeric). The datatable
+// equivalent is in _datatable.scss; amount read-outs (.doc-totals,
+// .balance-strip, .summary-card) already set it.
+.table { font-variant-numeric: tabular-nums; }
+
 // Wizard stepper panel — themed surface (the `bg-white` utility was removed
 // from the markup so it adapts to dark; `border`/`rounded` still apply).
 .wizard-stepper {
@@ -318,8 +324,11 @@ typeahead-container {
 
   // Required marker — red asterisk after the label (forms that opt in via
   // `.form-group.required`). Matches the mockup's `Full name *`.
+  // Only the FIELD label (a direct child of the group or of its
+  // <with-validation>): a descendant selector also starred the <label> that
+  // controls such as choosable-control wrap around each option ("Draft*").
   &.required > label::after,
-  &.required with-validation label::after {
+  &.required with-validation > label::after {
     content: " *";
     color: var(--cui-danger);
     font-weight: 700;
@@ -329,6 +338,29 @@ typeahead-container {
 textarea.form-control {
   min-height: 6rem;          // 96px
   resize: vertical;
+}
+
+// Form panels — one soft panel per form section (Identity, Contact, …) in the
+// party create/edit forms, replacing <hr /> + h6 separators that did not line
+// up across the two columns. Tokens only, so light, dark and per-app palettes
+// (Care redefines --ct-surface-2 / --ct-border-soft) follow automatically. The
+// bottom padding is 0 because the last .form-group already carries 1rem.
+.form-panel {
+  background-color: var(--ct-surface-2);
+  border: 1px solid var(--ct-border-soft);
+  border-radius: var(--ct-radius-sm);
+  padding: 1rem 1rem 0;
+}
+.form-panel-compact {
+  // Untitled grouping panel (side-header document header cards, spec §2):
+  // the fields are self-descriptive, so no title and a tighter inset.
+  padding: 0.75rem 0.75rem 0;
+}
+.form-panel-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;           // matches $h6-font-size in styles.scss
+  font-weight: 600;              // $headings-font-weight
+  color: var(--cui-secondary-color);   // what .text-muted resolves to
 }
 
 // ============================================================
@@ -428,8 +460,16 @@ textarea.form-control {
   // child (e.g. a `<textarea>` with default cols) can push the
   // column past its intended width, blowing out the row and
   // visually clipping the right column.
-  > .main-content .col-md-4,
-  > .main-content .col-md-8 {
+  // Only the two LAYOUT columns (direct children of the form's row), never
+  // nested grid columns inside a card: a descendant selector also stretched
+  // e.g. <billing-payment-capture>'s own col-md-4/col-md-8 to full height and
+  // pushed its fields out of view.
+  > .main-content > form > .row > .col-md-4,
+  > .main-content > .row > .col-md-4,
+  > .main-content > tabset > .tab-content > tab.tab-pane.active > form > .row > .col-md-4,
+  > .main-content > form > .row > .col-md-8,
+  > .main-content > .row > .col-md-8,
+  > .main-content > tabset > .tab-content > tab.tab-pane.active > form > .row > .col-md-8 {
     height: 100%;
     min-height: 0;
     min-width: 0;
@@ -437,7 +477,9 @@ textarea.form-control {
     flex-direction: column;
   }
 
-  > .main-content .col-md-4 {
+  > .main-content > form > .row > .col-md-4,
+  > .main-content > .row > .col-md-4,
+  > .main-content > tabset > .tab-content > tab.tab-pane.active > form > .row > .col-md-4 {
     overflow-y: auto;
   }
 
@@ -491,7 +533,9 @@ textarea.form-control {
   // `width: 100%` and overflows the card's right padding. The left
   // column already scrolls vertically (`overflow-y: auto`) so a
   // non-shrunk card is fine.
-  > .main-content .col-md-4 > .card {
+  > .main-content > form > .row > .col-md-4 > .card,
+  > .main-content > .row > .col-md-4 > .card,
+  > .main-content > tabset > .tab-content > tab.tab-pane.active > form > .row > .col-md-4 > .card {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -573,6 +617,155 @@ textarea.form-control {
     overflow-y: auto;
     display: block;
     padding: 0.5rem 0.25rem;
+  }
+}
+
+// `<selectable-control>` inside an `.input-group` (e.g. a "Product" addon in
+// front of the lookup). Bootstrap's join rules (shared border, squared inner
+// corners) reach only DIRECT children, and this control's bordered element is
+// nested (selectable-control > .selectable-control > .lookup-input-wrapper),
+// so without these it keeps its rounded corners and shows a doubled seam.
+// (Bootstrap's own `margin-left: -border-width` already lands on the host,
+// which closes the seam; only the corners and the flex sizing need help.)
+// Same idea as the `.input-group > input.form-control` fix in .bounded-form.
+.input-group > selectable-control {
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+}
+
+.input-group > selectable-control:not(:first-child) .lookup-input-wrapper {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input-group > selectable-control:not(:last-child) .lookup-input-wrapper {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+// `<select-control>` as a part of an `.input-group` (e.g. the billing Source
+// type, `[Sale Order x v][SO lookup]`). The control keeps its own trigger,
+// clear button, chevron and themed list; this only joins it to its neighbour:
+// content width (it does not stretch), squared inner corners (Bootstrap's own
+// negative margin on the next child gives the 1px seam). Trigger and list are
+// not restyled.
+.input-group > select-control {
+  flex: 0 0 auto;
+  // Same width empty and selected, so picking a type does not shift the lookup.
+  min-width: var(--ct-addon-select-min-w);
+}
+
+.input-group > select-control:not(:first-child) .sc-trigger {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input-group > select-control:not(:last-child) .sc-trigger {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+// Lift the focused part so its focus ring is not painted under the neighbour,
+// as Bootstrap does for a focused `.form-control` in a group.
+.input-group > select-control:focus-within {
+  position: relative;
+  z-index: 5;
+}
+
+// A type addon (`[Product][lookup]`, `[Service][lookup]`, `[Other Item][description]`):
+// one minimum width so the fields after it start at the same x down a list of
+// lines. Sized to the longest of those, "Other Item", in the addon font plus its
+// padding (94px measured); longer labels (e.g. "Platform Plan") still grow.
+// Minimum only.
+:root {
+  --ct-addon-type-min-w: 6rem;
+  // A select-control at the start of an input-group (billing Source type): the
+  // longest option, "Purchase Order" (bill), plus the clear x and the chevron
+  // measures 165px; "Delivery Note" 154px, "Subscription" 147px.
+  --ct-addon-select-min-w: 10.5rem;
+}
+
+.input-group-text.addon-type {
+  min-width: var(--ct-addon-type-min-w);
+  justify-content: center;
+}
+
+// A debit/credit side at the start of an amount group (`[Dr v][amount]`,
+// `[Cr][amount]`). The side is two letters, so the Source-sized widths above
+// would waste the cell: one narrower minimum, shared by the side select (its
+// "Select" placeholder plus chevron) and the static side addon, so amounts
+// start at the same x down a list of lines. Minimum only.
+:root {
+  --ct-addon-side-min-w: 5.5rem;
+  --ct-addon-method-min-w: 8rem;
+}
+
+.input-group-text.addon-side {
+  min-width: var(--ct-addon-side-min-w);
+  justify-content: center;
+}
+
+// The same method width for a bare `<select-control>` projected straight into
+// an input-group (the billing payment forms). Outranks the Source-sized
+// `.input-group > select-control` minimum above.
+.input-group > select-control.addon-method {
+  min-width: var(--ct-addon-method-min-w);
+}
+
+// An input-group whose parts EACH validate (`[Dr v][amount]`, both required):
+// every part keeps its own `<with-validation>` so each still reports its own
+// error, and the wrappers become the group's flex items. Bootstrap's
+// `.input-group > :not(:first-child)` already gives the 1px seam on the
+// wrapper; this sizes the wrappers (outranking the bounded-form
+// "with-validation is full width" rule) and squares the inner corners.
+.input-group.input-group-parts {
+  flex-wrap: nowrap;
+
+  > with-validation {
+    display: block;
+    width: auto;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  > with-validation.addon-side {
+    flex: 0 0 auto;
+    min-width: var(--ct-addon-side-min-w);
+  }
+
+  // A payment method at the start of a money-location group
+  // (`[Cash v][Main Vault v]`): sized to the longest method, "Bank Transfer",
+  // plus the chevron (127px measured = 8rem; the method is required, so its
+  // select shows no clear x), so the location starts at the same x whichever
+  // method is picked.
+  > with-validation.addon-method {
+    flex: 0 0 auto;
+    min-width: var(--ct-addon-method-min-w);
+  }
+
+  > with-validation:not(:last-child) :is(.form-control, .lookup-input-wrapper) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  > with-validation:not(:first-child) :is(.form-control, .lookup-input-wrapper) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  > with-validation:focus-within {
+    position: relative;
+    z-index: 5;
+  }
+
+  // One height for every part. select-control's trigger carries its own
+  // `min-height: 44px` (component style), taller than a line input, so the
+  // select stood a few px proud of the amount beside it. Inside a parts group
+  // the trigger sizes like the `.form-control` it is (same padding, border,
+  // line-height), so all parts share the input's height.
+  .sc-trigger {
+    min-height: 0;
   }
 }
 
@@ -697,10 +890,41 @@ textarea.form-control {
 }
 
 .doc-totals__field-label {
+  // Same look as the form's field labels (.form-group > label): one label
+  // style across the header card and the totals footer.
   margin: 0 !important;
-  font-size: 0.75rem;                  // 12px
-  color: var(--cui-secondary-color);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--cui-body-color);
   flex-shrink: 0;
+}
+
+// Field widths inside the footer. `.bounded-form` pins every `input.form-control`
+// to `width: 100%` (and an `.input-group` input to `width: 1%; flex: 1 1 auto`),
+// which outranked the 7rem below and stretched Discount across the row. These
+// selectors match that weight and come later, so the footer keeps its sizes.
+.doc-totals .doc-totals__field input.doc-totals__field-input {
+  width: 7rem;
+  flex: 0 0 auto;
+}
+
+// Method | amount input-group (e.g. Shipping): the picker takes the room, the
+// read-only amount is a fixed right segment with tabular figures.
+.doc-totals .doc-totals__field > .input-group {
+  width: 18rem;
+  flex-wrap: nowrap;
+}
+
+.doc-totals .doc-totals__field .input-group > input.form-control {
+  width: 7rem;
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+// A switch (e.g. Apply Tax) centred on the inputs: drop the form-check's
+// bottom margin so it shares their baseline.
+.doc-totals__field .form-check {
+  margin-bottom: 0;
 }
 
 .doc-totals__field-input {
@@ -1462,4 +1686,19 @@ typeahead-container {
   .border-primary.rounded {
     box-shadow: 0 0 0 2px var(--ct-ring);
   }
+}
+
+// Status explainer as the header badge's caption (spec §5 rev 19): when
+// <value-info> is the first child of a card body it sits close under the
+// header and close above the first panel, about half the default gaps
+// (owner, 2026-11-19). The host's `mt-2` utility is !important, hence the
+// override here; the inner hint drops its own top/bottom margins.
+.card-body > value-info:first-child {
+  margin-top: calc(var(--cui-card-spacer-y, 1rem) * -0.125) !important;
+  margin-bottom: calc(var(--cui-card-spacer-y, 1rem) * -0.25);
+}
+
+.card-body > value-info:first-child > .form-text {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
