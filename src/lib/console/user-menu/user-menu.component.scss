@@ -11,7 +11,7 @@
   place-items: center;
   border-radius: 50%;
   flex-shrink: 0;
-  background: var(--ct-primary-soft, rgba(var(--cui-primary-rgb), 0.12));
+  background: var(--ct-primary-soft);
   color: var(--cui-primary);
   font-weight: 700;
   line-height: 1;
@@ -104,7 +104,7 @@
   // Stronger elevation so the menu lifts clearly off the sidebar (mockup).
   box-shadow: 0 16px 38px -10px rgba(20, 22, 50, 0.34), 0 4px 12px -6px rgba(20, 22, 50, 0.18);
   overflow: hidden;
-  background-color: var(--ct-surface, #fff);
+  background-color: var(--ct-surface);
 
   .user-menu-card {
     display: flex;
@@ -197,7 +197,7 @@
 
     &:hover,
     &:focus {
-      background-color: var(--ct-danger-soft, rgba(var(--cui-danger-rgb), 0.08));
+      background-color: var(--ct-danger-soft);
       color: var(--cui-danger);
       > svg, > i { color: var(--cui-danger); }
     }

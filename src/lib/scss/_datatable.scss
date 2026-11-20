@@ -209,7 +209,7 @@
         li.active a {
           background-color: var(--cui-primary);
           border-color: var(--cui-primary);
-          color: var(--ct-on-primary, #fff);
+          color: var(--ct-on-primary);
           font-weight: 600;
         }
 
@@ -467,7 +467,7 @@
   border-radius: 50%;
   vertical-align: middle;
   flex-shrink: 0;
-  background: var(--ct-primary-soft, rgba(var(--cui-primary-rgb), 0.12));
+  background: var(--ct-primary-soft);
   color: var(--cui-primary);
   font-weight: 700;
   line-height: 1;
@@ -621,7 +621,7 @@
 
   .dt-copy-icon-check {
     display: none;
-    color: var(--cui-success, #2eb85c);
+    color: var(--cui-success);
   }
 
   &:hover .dt-copy-icon {
@@ -645,7 +645,7 @@
       transform: translateX(-50%);
       padding: 2px 8px;
       border-radius: 0.25rem;
-      background-color: var(--cui-dark, #1f2937);
+      background-color: var(--cui-dark);
       color: #fff;
       font-size: 0.6875rem;
       font-weight: 500;
