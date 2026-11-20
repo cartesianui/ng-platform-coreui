@@ -970,7 +970,8 @@ textarea.form-control {
 
 .doc-totals__sub-value {
   width: auto !important;
-  max-width: 6rem;
+  // No cap: a large figure ("Rs 20,002,850.00") stays on one line; the card sizes to its content.
+  white-space: nowrap;
   height: 1.25rem !important;
   padding: 0 !important;
   border: none !important;
