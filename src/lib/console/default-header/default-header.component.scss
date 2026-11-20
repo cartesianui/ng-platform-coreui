@@ -15,6 +15,16 @@
     align-items: center;
     gap: 0.25rem;
   }
+
+  // ONE ROW, ALWAYS, when the section tabs are shown. The header's flex row wraps, and at 1366 a
+  // tenant with every section (12 tabs) wrapped the tabs onto a row of their own that still ran
+  // ~160px past the viewport — a three-row header and a horizontal scrollbar on every page. The tabs
+  // now shrink (compact below xxl, see `.section-nav`) and, as a last resort, scroll inside their own
+  // strip, so nothing pushes the page wider than the window. Header-nav shells (POS / Care) have no
+  // `.section-nav` and keep their own wrapping.
+  ::ng-deep > .container-fluid:has(> .section-nav) {
+    flex-wrap: nowrap;
+  }
 }
 
 // ─── Global dashboard "Home" button ──────────────────────────
@@ -70,6 +80,13 @@
   align-items: stretch;
   margin-left: 0.75rem;
   height: 100%;
+  // May shrink below its content (flex items default to `min-width: auto`), and scrolls inside
+  // itself rather than widening the page if a tenant has more sections than fit.
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
 
   .nav-item {
     display: flex;
@@ -113,6 +130,20 @@
         opacity: 1;
         color: var(--cui-primary);
       }
+    }
+  }
+
+  // Below xxl (Bootstrap's 1400px) the tabs go text-only and a little tighter — at 1366 that is
+  // what lets all twelve fit on the header row. The label still names the section; the icon is
+  // decoration beside it.
+  @media (max-width: 1399.98px) {
+    gap: 0.125rem;
+
+    .nav-item .nav-link {
+      padding-left: 0.45rem;
+      padding-right: 0.45rem;
+
+      .ws-icon { display: none; }
     }
   }
 }
