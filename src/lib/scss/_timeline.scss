@@ -30,15 +30,6 @@
   margin: 0;
   padding: 0.25rem 0 0.5rem;
 
-  // SIZED TO THE VIEWPORT. `.dt-embedded` sets `overflow: hidden`, and the sibling tabs survive
-  // that only because ngx-datatable renders a scroller of its own; a plain list does not, so a
-  // long timeline was clipped with its newest events unreachable. The subtraction is the chrome
-  // above — app header, page header, order card, tab bar — and the floor stops it collapsing on
-  // a short window, where a scrollbar is more use than a squeeze.
-  max-height: calc(100vh - 24rem);
-  min-height: 18rem;
-  overflow-y: auto;
-
   &__day {
     position: sticky;
     top: 0;
@@ -123,10 +114,9 @@
     color: var(--ct-text-muted);
   }
 
-  // Pushed to the far edge: it answers "who", which is the last question anyone asks of a row
-  // and the first thing that would crowd the title if it sat beside it.
+  // Sits on the sub-line after the detail ("· by …"): it answers "who", the last question anyone
+  // asks of a row, so it reads after the facts instead of crowding the title.
   &__actor {
-    margin-left: auto;
     font-size: 0.75rem;
     color: var(--ct-text-muted);
     white-space: nowrap;
