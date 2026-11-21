@@ -155,3 +155,9 @@
     }
   }
 }
+
+// Clip keeps the rounded corners without creating a scroll container, so `__day` sticks to the tab host.
+.dt-embedded:has(> .so-timeline),
+.dt-embedded:has(> .po-timeline) {
+  overflow: clip;
+}
