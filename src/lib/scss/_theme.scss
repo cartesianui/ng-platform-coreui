@@ -609,9 +609,12 @@ textarea.form-control {
     min-height: 0;
     overflow: hidden;
   }
-  // History tab body — let the audit-history block scroll internally
-  // so the tabs strip stays pinned to the top.
-  .main-content > tabset > .tab-content > tab.tab-pane.active > audit-history {
+  // History and Timeline tab bodies — let the block scroll internally
+  // so the tabs strip stays pinned to the top. The timelines are plain
+  // lists with no scroller of their own, so the whole tab scrolls here.
+  .main-content > tabset > .tab-content > tab.tab-pane.active > audit-history,
+  .main-content > tabset > .tab-content > tab.tab-pane.active > admin-sales-order-timeline,
+  .main-content > tabset > .tab-content > tab.tab-pane.active > admin-purchase-order-timeline {
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
