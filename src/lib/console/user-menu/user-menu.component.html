@@ -58,26 +58,26 @@
     <li class="user-menu-section">Settings</li>
 
     <li>
-      <a routerLink="/admin/settings/profile" cDropdownItem class="user-menu-item">
+      <a [routerLink]="settingsPath + '/profile'" cDropdownItem class="user-menu-item">
         <svg cIcon name="cilUser"></svg>
         <span>Profile</span>
       </a>
     </li>
     <li>
-      <a routerLink="/admin/settings/profile" cDropdownItem class="user-menu-item">
+      <a [routerLink]="settingsPath + '/user'" cDropdownItem class="user-menu-item">
         <svg cIcon name="cilUser"></svg>
         <span>User Settings</span>
       </a>
     </li>
     @if (canManageWorkspace()) {
       <li>
-        <a routerLink="/admin/settings/tenant" cDropdownItem class="user-menu-item">
+        <a [routerLink]="settingsPath + '/tenant'" cDropdownItem class="user-menu-item">
           <svg cIcon name="cilBuilding"></svg>
           <span>Tenant Settings</span>
         </a>
       </li>
       <li>
-        <a routerLink="/admin/settings/domain" cDropdownItem class="user-menu-item">
+        <a [routerLink]="settingsPath + '/domain'" cDropdownItem class="user-menu-item">
           <svg cIcon name="cilGlobeAlt"></svg>
           <span>Domain Settings</span>
         </a>

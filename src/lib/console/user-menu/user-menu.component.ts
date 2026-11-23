@@ -2,6 +2,7 @@ import { Component, computed, inject, Input } from '@angular/core';
 import { AuthHttpService, SessionService, TokenService } from '@cartesianui/platform-core';
 import { HeaderActionsService } from '../../services/header-actions.service';
 import { UserMenuSectionsService } from '../../services/user-menu-sections.service';
+import { DEFAULT_USER_MENU_CONFIG, USER_MENU_CONFIG } from './user-menu.config';
 
 /**
  * Shared user menu — avatar trigger + dropdown (profile / settings /
@@ -28,6 +29,10 @@ export class UserMenuComponent {
   readonly #authHttp = inject(AuthHttpService);
   readonly #headerActions = inject(HeaderActionsService);
   readonly #menuSections = inject(UserMenuSectionsService);
+  readonly #config = { ...DEFAULT_USER_MENU_CONFIG, ...inject(USER_MENU_CONFIG, { optional: true }) };
+
+  /** Base path of the app's mounted settings routes (see USER_MENU_CONFIG). */
+  readonly settingsPath = this.#config.settingsPath;
 
   /** Feature-contributed actions (e.g. POS/Care "Done for Today") — shown in
    *  the menu alongside Sign Out (moved out of the header). */
@@ -56,7 +61,9 @@ export class UserMenuComponent {
   });
 
   /** Tenant + domain settings are host/tenant-admin only. */
-  readonly canManageWorkspace = computed(() => this.#sessionService.isHostAdmin || this.#sessionService.isTenantAdmin);
+  readonly canManageWorkspace = computed(
+    () => this.#config.showWorkspaceSettings && (this.#sessionService.isHostAdmin || this.#sessionService.isTenantAdmin)
+  );
 
   logout(): void {
     // The HttpOnly `refreshToken` cookie (separate from the JS-visible
